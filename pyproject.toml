@@ -1,0 +1,42 @@
+[project]
+name = "log-analyzer"
+version = "1.0.0"
+description = ""
+authors = [
+    {name = "Dmitriy Vdovichenko",email = "yotskry@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "structlog (>=25.1.0,<26.0.0)",
+    "pytest (>=8.3.4,<9.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+pre-commit = "^4.1.0"
+black = "^25.1.0"
+isort = "^6.0.0"
+mypy = "^1.14.1"
+flake8 = "^7.1.1"
+flake8-pyproject = "^1.2.3"
+pytest-cov = "^6.0.0"
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+known_third_party = ["structlog", "pytest"]
+
+[tool.flake8]
+max-line-length = 120
+exclude = [
+    ".venv",
+    "__pycache__"
+]

@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+    - uses: actions/checkout@v5
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Poetry
+      run: pipx install poetry
+
+    - name: Install dependencies
+      run: poetry install --with dev --no-interaction
+
+    - name: Check formatting (black)
+      run: poetry run black --check .
+
+    - name: Check imports sorting (isort)
+      run: poetry run isort --check .
+
+    - name: Lint with flake8
+      run: poetry run flake8 .
+
+    - name: Type checking (mypy)
+      run: poetry run mypy .
+
+    - name: Run tests
+      run: poetry run pytest -v
